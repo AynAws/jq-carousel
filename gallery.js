@@ -13,9 +13,13 @@ $(document).ready(() => {
   // - slideToggle the visibility of the .details section
 
   // Select the "Next Photo" button and add a click event to call showNextPhoto
-
+  $('#nextPhoto').on('click', () => {
+    showNextPhoto()
+  })
   // Select the "Previous Photo" button and add a click event to call showPrevPhoto
-
+  $('#prevPhoto').on('click', () => {
+    showPrevPhoto()
+  })
   // Call fetchJSON() to load the initial set of images
   fetchJSON()
 })
@@ -40,6 +44,7 @@ function fetchJSON () {
 // Function to swap and display the next photo in the slideshow
 function swapPhoto () {
   console.log("swapPhoto runs!")
+  console.log(mCurrentIndex)
   // Access mImages[mCurrentIndex] to update the image source and details
   const images = mImages[mCurrentIndex]
   // Update the #photo element's src attribute with the current image's path
@@ -53,21 +58,21 @@ function swapPhoto () {
 // Advances to the next photo, loops to the first photo if the end of array is reached
 function showNextPhoto () {
   // Increment mCurrentIndex and call swapPhoto()
-  mCurrentIndex++;
-  swapPhoto();
+  mCurrentIndex++
   // Ensure it loops back to the beginning if mCurrentIndex exceeds array length
-  if (mCurrentIndex >= mImages.length + 1) {
+  if (mCurrentIndex >= mImages.length) {
     mCurrentIndex = 0;
   }
+  swapPhoto()
 }
 
 // Goes to the previous photo, loops to the last photo if mCurrentIndex goes negative
 function showPrevPhoto () {
   // Decrement mCurrentIndex and call swapPhoto()
   mCurrentIndex--
-  swapPhoto()
   // Ensure it loops to the end if mCurrentIndex is less than 0
-  mCurrentIndex <= 0 ? mCurrentIndex = mImages.length + 1 : null
+  mCurrentIndex < 0 ? mCurrentIndex = mImages.length - 1 : null
+  swapPhoto()
 }
 
 // Starter code for the timer function
